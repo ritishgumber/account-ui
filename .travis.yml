@@ -22,7 +22,16 @@ after_success:
   docker push cloudboost/accounts:2.0.$TRAVIS_BUILD_NUMBER;
   docker push cloudboost/accounts:latest;
   fi
+  
+deploy:
+  provider: releases
+  api_key: $GH_TOKEN
+  file: "account-ui/README.md"
+  skip_cleanup: true
+  on:
+    tags: false
 
 #Notify Team on Slack
 notifications:
   slack: cloudboost:gm7nWJDLDtBRyF75VKLKOoMW
+  

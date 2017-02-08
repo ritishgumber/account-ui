@@ -22,7 +22,15 @@ after_success:
   docker push cloudboost/accounts:2.0.$TRAVIS_BUILD_NUMBER;
   docker push cloudboost/accounts:latest;
   fi
-  
+
+before_deploy:
+  - git config --global user.email "builds@travis-ci.com"
+  - git config --global user.name "Travis CI"
+  - export GIT_TAG=$TRAVIS_BRANCH-2.0.$TRAVIS_BUILD_NUMBER
+  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+  - git push -q https://github.com/CloudBoost/account-ui --tags
+  - ls -R
+
 deploy:
   provider: releases
   api_key: $GH_TOKEN
@@ -30,8 +38,12 @@ deploy:
   skip_cleanup: true
   on:
     tags: false
+    all_branches: true
+
+branches:
+  except:
+    - /^*-v[0-9]/
 
 #Notify Team on Slack
 notifications:
   slack: cloudboost:gm7nWJDLDtBRyF75VKLKOoMW
-  

@@ -26,7 +26,7 @@ after_success:
 deploy:
   provider: releases
   api_key: $GH_TOKEN
-  file: "account-ui/README.md"
+  file: "README.md"
   skip_cleanup: true
   on:
     tags: false

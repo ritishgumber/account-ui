@@ -3,8 +3,6 @@ services:
 - docker
 env:
   global:
-    # Ensure the downloaded SDK is first on the PATH
-    - PATH=${HOME}/google-cloud-sdk/bin:$PATH
     # Ensure the install happens without prompts
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 language: node_js
@@ -14,18 +12,17 @@ before_install:
 - npm install
 install:
 - webpack --progress
-after_success:
 # Build Docker Images
 - docker build -t cloudboost/accounts:2.0.$TRAVIS_BUILD_NUMBER .
 - docker build -t cloudboost/accounts:latest .
-#Deploy.
-#Docker Login
-- docker login --username $DOCKERUSERNAME --password $DOCKERPASSWORD --email $DOCKEREMAIL
-#Push docker images. 
-- docker push cloudboost/accounts:2.0.$TRAVIS_BUILD_NUMBER
-- docker push cloudboost/accounts:latest
+after_success:
+# Docker Deploy.
+- if [ "$TRAVIS_BRANCH" == "master" ]; then
+  docker login --username $DOCKERUSERNAME --password $DOCKERPASSWORD --email $DOCKEREMAIL;
+  docker push cloudboost/accounts:2.0.$TRAVIS_BUILD_NUMBER;
+  docker push cloudboost/accounts:latest;
+  fi
 
 #Notify Team on Slack
 notifications:
   slack: cloudboost:gm7nWJDLDtBRyF75VKLKOoMW
-

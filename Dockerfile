@@ -1,7 +1,6 @@
 #
 # CloudBoost Dashbard Dockerfile
 #
-
 # Pull base image nodejs image.
 FROM node:boron
 

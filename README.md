@@ -24,7 +24,7 @@ Pull requests are very welcome!
 We'd love to hear your feedback and suggestions in the issue tracker.
 
 
-#LICENSE
+#LICENSE 
 
 Copyright 2016 HackerBay, Inc.
 

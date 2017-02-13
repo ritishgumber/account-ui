@@ -7,7 +7,8 @@ class Reset extends React.Component {
     constructor() {
         super()
         this.state = {
-            appActivated: false
+            appActivated: false,
+            error: false
         }
     }
     componentDidMount() {
@@ -16,7 +17,6 @@ class Reset extends React.Component {
             mixpanel.track('Portal:Visited ForgotPassword Page', {"Visited": "Visited ForgotPassword page in portal!"});
             /****End of Tracking*****/
         }
-        console.log('this2');
         let postData = {}
         let appId = window.location.pathname.split('/')[2];
         axios.post(USER_SERVICE_URL + "/app/active/" + appId, postData).then(function(data) {
@@ -27,18 +27,15 @@ class Reset extends React.Component {
                 browserHistory.replace('/');
             }, 5000);
         }.bind(this), function(err) {
-            this.setProgress(false)
-            this.state['errorMessage'] = 'We dont have an account with this email. Please try again.'
-            if (err.response == undefined) {
-                this.state['errorMessage'] = "Sorry, we currently cannot process your request, please try again later."
-            }
-            this.state.email = ''
+            this.state.error = true;
             this.setState(this.state);
-
+            setTimeout(function() {
+                browserHistory.replace('/');
+            }, 5000);
         }.bind(this))
         if (!__isDevelopment) {
             /****Tracking*********/
-            mixpanel.track('Portal:Clicked ResetPassword Button', {"Clicked": "ResetPassword Button in portal!"});
+            mixpanel.track('activate-app', {"app-data": appId});
             /****End of Tracking*****/
         }
     }
@@ -50,7 +47,7 @@ class Reset extends React.Component {
                 <div id="login">
                     <div id="image">
                         <img className="logo" src="/assets/images/CbLogoIcon.png"/>
-                        <div className={this.state.appActivated
+                        <div className={this.state.appActivated || this.state.error
                             ? 'hide'
                             : ''}><CircularProgress color="#4E8EF7" size={50} thickness={6}/>
                         </div>
@@ -62,6 +59,12 @@ class Reset extends React.Component {
                             &nbsp;is now activated.</h3>
                         <h5 className="tacenter bfont">Your app is now in active state and will NOT be deleted automatically. Please make sure you use your app regularly to avoid being marked as inactive.</h5>
 
+                    </div>
+                    <div id="headLine" className={this.state.error
+                        ? ''
+                        : 'hide'}>
+                        <h3 className="tacenter hfont">
+                            Unable to activate your app.</h3>
                     </div>
                 </div>
             </div>

@@ -29,9 +29,7 @@ class Reset extends React.Component {
         }.bind(this), function(err) {
             this.state.error = true;
             this.setState(this.state);
-            setTimeout(function() {
-                browserHistory.replace('/');
-            }, 5000);
+
         }.bind(this))
         if (!__isDevelopment) {
             /****Tracking*********/
@@ -65,6 +63,12 @@ class Reset extends React.Component {
                         : 'hide'}>
                         <h3 className="tacenter hfont">
                             Unable to activate your app.</h3>
+                        <h5 className="tacenter bfont">We’re sorry, we cannot activate your app at this time. We request you to please contact us at &nbsp;
+                            <a href="mailto:support@cloudboost.io">
+                                support@cloudboost.io
+                            </a>
+                            &nbsp; and let us know.</h5>
+
                     </div>
                 </div>
             </div>

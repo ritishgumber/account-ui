@@ -67,7 +67,8 @@ class Reset extends React.Component {
                             <a href="mailto:support@cloudboost.io">
                                 support@cloudboost.io
                             </a>
-                            &nbsp; and let us know.</h5>
+                            &nbsp;
+                        </h5>
 
                     </div>
                 </div>

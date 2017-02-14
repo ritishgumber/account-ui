@@ -10,6 +10,9 @@ node_js:
 - '6'
 before_install:
 - npm install
+- curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+- chmod +x ./kubectl
+- sudo mv ./kubectl /usr/local/bin/kubectl
 install:
 - webpack --progress
 after_success:
@@ -22,7 +25,6 @@ before_deploy:
   - export GIT_TAG=2.0.$TRAVIS_BUILD_NUMBER
   - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
   - git push -q https://$GITLOGIN@github.com/CloudBoost/account-ui --tags
-  - ls -R
 deploy:
   provider: releases
   api_key: $GH_TOKEN
@@ -37,6 +39,12 @@ after_deploy:
   docker login --username $DOCKERUSERNAME --password $DOCKERPASSWORD --email $DOCKEREMAIL;
   docker push cloudboost/accounts:2.0.$TRAVIS_BUILD_NUMBER;
   docker push cloudboost/accounts:latest;
+  git clone https://github.com/CloudBoost/kube-cred.git;
+  cd kube-cred;
+  openssl enc -in config.enc -out config -d -aes256 -k $KUBE_ENC;
+  mkdir ~/.kube;
+  mv config ~/.kube/;
+  kubectl rolling-update cloudboost-accounts --image=cloudboost/accounts:latest --image-pull-policy=Always;
   fi
 branches:
   except:

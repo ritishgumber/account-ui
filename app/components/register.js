@@ -126,7 +126,7 @@ class Register extends React.Component {
                   </form>
                   <form onSubmit={this.signUp.bind(this)} className={this.state.isCustomDomain ? '':'hide'}>
             			   <input type="text" value={this.state.companyName} onChange={this.changeHandler.bind(this,'companyName')} className="loginInput from-control" placeholder="Company Name" required/>
-                     <input type="number" value={this.state.phoneNumber} onChange={this.changeHandler.bind(this,'phoneNumber')} className="loginInput from-control" placeholder="Phone Number" required/>
+                     <input type="text" value={this.state.phoneNumber} onChange={this.changeHandler.bind(this,'phoneNumber')} className="loginInput from-control" placeholder="Phone Number" required/>
                      <select className="companysize" required value={this.state.companySize} onChange={this.changeHandler.bind(this,'companySize')}>
                        <option value="1-10">Company Size - 1-10</option>
                        <option value="11-50">Company Size - 11-50</option>

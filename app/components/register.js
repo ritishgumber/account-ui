@@ -30,7 +30,9 @@ class Register extends React.Component {
         }
    }
    signUp(e){
-      e.preventDefault()
+      if(e.preventDefault){
+         e.preventDefault()
+      }
       this.setProgress(true)
       let postData = {}
       if(this.state.isCustomDomain){
@@ -83,7 +85,7 @@ class Register extends React.Component {
       let isCustomDomain = DOMAIN_LIST.indexOf(domain) === -1
       if(isCustomDomain){
         this.setState({isCustomDomain:isCustomDomain})
-      } else this.signUp()
+      } else this.signUp(e)
    }
    changeHandler(which,e){
       this.state[which] = e.target.value

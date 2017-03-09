@@ -14,6 +14,7 @@ class Activate extends React.Component {
       }
    }
    componentWillMount() {
+     document.title = "CloudBoost | Activate"
       if(this.props.location.query.code == undefined){
          this.props.history.pushState('login')
       } else {

@@ -16,6 +16,7 @@ class ChangePassword extends React.Component {
       }
    }
    componentWillMount() {
+     document.title = "CloudBoost | Change Password"
       if(this.props.location.query.code == undefined){
          this.props.history.pushState('login')
       } else {

@@ -19,6 +19,7 @@ class Login extends React.Component {
         }
     }
     componentDidMount() {
+        document.title = "CloudBoost | Login"
         if (!__isDevelopment) {
             /****Tracking*********/
             mixpanel.track('Portal:Visited LogIn Page', {"Visited": "Visited Log In page in portal!"});
@@ -185,8 +186,8 @@ class Login extends React.Component {
                             ? ''
                             : 'hide'}>
                             <span className="forgotpw fr">
-                                <span className="greydonthaveaccnt">Dont have an account?</span>
-                                Get Started.</span>
+                                <span className="greydonthaveaccnt">Dont have an account? </span>
+                                Sign Up.</span>
                         </Link>
                     </div>
                 </div>

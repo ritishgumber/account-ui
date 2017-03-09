@@ -14,6 +14,7 @@ class Reset extends React.Component {
         }
     }
     componentDidMount() {
+        document.title = "CloudBoost | Reset"
         if (!__isDevelopment) {
             /****Tracking*********/
             mixpanel.track('Portal:Visited ForgotPassword Page', {"Visited": "Visited ForgotPassword page in portal!"});
@@ -104,8 +105,8 @@ class Reset extends React.Component {
                         </Link>
                         <Link to="/signup">
                             <span className="forgotpw fr">
-                                <span className="greydonthaveaccnt">Dont have an account?</span>
-                                Create one.</span>
+                                <span className="greydonthaveaccnt">Dont have an account? </span>
+                                Sign Up.</span>
                         </Link>
                     </div>
                     <div className={this.state.success

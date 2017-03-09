@@ -17,6 +17,7 @@ class NewServer extends React.Component {
       }
    }
    componentWillMount() {
+     document.title = "CloudBoost | NewServer"
       axios.get(USER_SERVICE_URL+'/server/isNewServer').then((res)=>{
          if(!res.data){
             window.location.href = '/#/login'

@@ -23,6 +23,7 @@ class Register extends React.Component {
       }
    }
    componentDidMount(){
+     document.title = "CloudBoost | SignUp"
       if(!__isDevelopment){
           /****Tracking*********/          
            mixpanel.track('Portal:Visited SignUp Page', { "Visited": "Visited Sign Up page in portal!"});
@@ -61,12 +62,13 @@ class Register extends React.Component {
          this.setProgress(false) 
          this.state.password = ''
          this.state.name = ''
-         this.state.email = ''
          this.state.success = true;
          this.state['errorMessage'] = ''
          this.setState(this.state)
       }.bind(this),function(err){
-         this.setProgress(false) 
+         this.setProgress(false)
+         this.state.isCustomDomain = false;
+         this.state.email = ''; 
          this.state['errorMessage'] = "User with same email already exists. If this email belongs to you, you can reset your password."
          if(err.response == undefined){
             this.state['errorMessage'] = "Oops, we couldn't connect to the server. Please try again later."
@@ -87,6 +89,12 @@ class Register extends React.Component {
         this.setState({isCustomDomain:isCustomDomain})
       } else this.signUp(e)
    }
+   resend() {
+        let postData = {
+            email: this.state.email
+        }
+        axios.post(USER_SERVICE_URL + "/user/resendverification", postData)
+    }
    changeHandler(which,e){
       this.state[which] = e.target.value
       this.setState(this.state)
@@ -117,6 +125,9 @@ class Register extends React.Component {
          		</div>
                <div id="box" className={!this.state.success ? 'hide':''}>
                   <h5 className="tacenter bfont">We have sent you the verification email. Please make sure you check spam.</h5>
+                  <h5 className="tacenter">
+                          <span className="forgotpw" onClick={this.resend.bind(this)} style={{cursor:'pointer'}}>Resend Verification Email.</span>
+                  </h5>
                </div>
          		<div id="loginbox" className={!this.state.success ? '':'hide'}>
                   <h5 className="tacenter red">{ this.state.errorMessage }</h5>

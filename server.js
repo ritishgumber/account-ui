@@ -19,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'app')));
 global.navigator = { navigator: 'all' };
 global.__isDevelopment = process.env["CLOUDBOOST_DEVELOPMENT"] || false
 global.__isHosted = process.env["CLOUDBOOST_HOSTED"] || false
+global.__isBrowser = false;
 if(__isHosted){
 	global.USER_SERVICE_URL = "https://service.cloudboost.io"
 	global.SERVER_DOMAIN = "cloudboost.io"
@@ -44,6 +45,7 @@ app.get('/app/key.js',function(req,res){
 		/***************************************************Connecting URLs*********************************************************/
 		content+= "var __isDevelopment = "+(process.env["CLOUDBOOST_DEVELOPMENT"] || "false")+";\n";
 		content+= "var __isHosted = "+(process.env["CLOUDBOOST_HOSTED"] || "false")+";\n";
+		content+= "var __isBrowser = typeof document !== 'undefined';\n";
 		content+= "var USER_SERVICE_URL = null,\n";
 		content+= "SERVER_URL = null,\n";
 		content+= "DASHBOARD_URL = null,\n";

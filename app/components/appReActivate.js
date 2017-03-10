@@ -12,7 +12,7 @@ class Reset extends React.Component {
         }
     }
     componentDidMount() {
-        document.title = "CloudBoost | Activate"
+        if(__isBrowser) document.title = "CloudBoost | Activate"
         if (!__isDevelopment) {
             /****Tracking*********/
             mixpanel.track('Portal:Visited ForgotPassword Page', {"Visited": "Visited ForgotPassword page in portal!"});

@@ -19,7 +19,7 @@ class Login extends React.Component {
         }
     }
     componentDidMount() {
-        document.title = "CloudBoost | Login"
+        if(__isBrowser) document.title = "CloudBoost | Login"
         if (!__isDevelopment) {
             /****Tracking*********/
             mixpanel.track('Portal:Visited LogIn Page', {"Visited": "Visited Log In page in portal!"});

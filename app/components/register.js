@@ -23,7 +23,7 @@ class Register extends React.Component {
       }
    }
    componentDidMount(){
-     if(__isBrowser) document.title = "CloudBoost | SignUp"
+     if(__isBrowser) document.title = "CloudBoost | Sign Up"
       if(!__isDevelopment){
           /****Tracking*********/          
            mixpanel.track('Portal:Visited SignUp Page', { "Visited": "Visited Sign Up page in portal!"});

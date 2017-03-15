@@ -19,7 +19,8 @@ class Register extends React.Component {
          companySize:'1-10',
          phoneNumber:'',
          reference:'',
-         jobRole:'executive'
+         jobRole:'executive',
+         resendEmail:false
       }
    }
    componentDidMount(){
@@ -94,6 +95,7 @@ class Register extends React.Component {
             email: this.state.email
         }
         axios.post(USER_SERVICE_URL + "/user/resendverification", postData)
+        this.setState({resendEmail:true})
     }
    changeHandler(which,e){
       this.state[which] = e.target.value
@@ -124,9 +126,11 @@ class Register extends React.Component {
                <h5 className={this.state.isCustomDomain ? 'tacenter bfont':'hide'}>One last step.</h5>
          		</div>
                <div id="box" className={!this.state.success ? 'hide':''}>
-                  <h5 className="tacenter bfont">We have sent you the verification email. Please make sure you check spam.</h5>
+                  <h5 className={ this.state.resendEmail ? "hide" : "tacenter bfont"}>We have sent you the verification email. Please make sure you check spam.</h5>
+                  <h5 className={ this.state.resendEmail ? "tacenter bfont" : "hide"}>Verification email sent again.</h5>
                   <h5 className="tacenter">
-                          <span className="forgotpw" onClick={this.resend.bind(this)} style={{cursor:'pointer'}}>Resend Verification Email.</span>
+                    <span className={ this.state.resendEmail ? "hide" : "forgotpw"} onClick={this.resend.bind(this)} style={{cursor:'pointer'}}>Did not get it ? Send verification email again.</span>
+                    <span className={ this.state.resendEmail ? "forgotpw" : "hide"} onClick={this.resend.bind(this)} style={{cursor:'pointer'}}>Resend again ?</span>
                   </h5>
                </div>
          		<div id="loginbox" className={!this.state.success ? '':'hide'}>

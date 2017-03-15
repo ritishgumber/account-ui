@@ -14,7 +14,7 @@ class Reset extends React.Component {
         }
     }
     componentDidMount() {
-        if(__isBrowser) document.title = "CloudBoost | Reset"
+        if(__isBrowser) document.title = "CloudBoost | Forgot Password"
         if (!__isDevelopment) {
             /****Tracking*********/
             mixpanel.track('Portal:Visited ForgotPassword Page', {"Visited": "Visited ForgotPassword page in portal!"});
@@ -95,7 +95,7 @@ class Reset extends React.Component {
                         : 'hide'}>
                         <h5 className="tacenter red">{this.state.errorMessage}</h5>
                         <form onSubmit={this.reset.bind(this)}>
-                            <input type="email" value={this.state.email} onChange={this.changeHandler.bind(this, 'email')} className="loginInput from-control" placeholder="Email." disabled={this.state.successReset} required/>
+                            <input type="email" value={this.state.email} onChange={this.changeHandler.bind(this, 'email')} className="loginInput from-control" placeholder="Your Email." disabled={this.state.successReset} required/>
                             <button className="loginbtn" type="submit">
                                 Reset Password
                             </button>

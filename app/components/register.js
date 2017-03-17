@@ -129,8 +129,8 @@ class Register extends React.Component {
                   <h5 className={ this.state.resendEmail ? "hide" : "tacenter bfont"}>We have sent you the verification email. Please make sure you check spam.</h5>
                   <h5 className={ this.state.resendEmail ? "tacenter bfont" : "hide"}>Verification email sent again.</h5>
                   <h5 className="tacenter">
-                    <span className={ this.state.resendEmail ? "hide" : "forgotpw"} onClick={this.resend.bind(this)} style={{cursor:'pointer'}}>Did not get it ? Send verification email again.</span>
-                    <span className={ this.state.resendEmail ? "forgotpw" : "hide"} onClick={this.resend.bind(this)} style={{cursor:'pointer'}}>Resend again ?</span>
+                    <span className={ this.state.resendEmail ? "hide" : "forgotpw"} onClick={this.resend.bind(this)} style={{cursor:'pointer'}}>Did not get it? Send verification email again.</span>
+                    <span className={ this.state.resendEmail ? "forgotpw" : "hide"} onClick={this.resend.bind(this)} style={{cursor:'pointer'}}>Resend again?</span>
                   </h5>
                </div>
          		<div id="loginbox" className={!this.state.success ? '':'hide'}>

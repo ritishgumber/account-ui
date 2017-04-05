@@ -1,4 +1,4 @@
-#CloudBoost 
+# CloudBoost 
 
 [![Build Status](https://travis-ci.org/CloudBoost/account-ui.svg?branch=master)](https://travis-ci.org/CloudBoost/account-ui)
 
@@ -12,19 +12,19 @@ CloudBoost is the Complete NoSQL Database Service for your app. **Think of Cloud
  - More - ACL's, User Authentication, Server-less apps and more. 
 
 
-#CloudBoost Accounts
+# CloudBoost Accounts
 
 This is a CloudBoost Accounts UI for user management and can be used with [CloudBoost Engine](https://www.github.com/CloudBoost/cloudboost).
 
 
-#Contributing
+# Contributing
 
 Pull requests are very welcome!
 
 We'd love to hear your feedback and suggestions in the issue tracker.
 
 
-#LICENSE 
+# LICENSE 
 
 Copyright 2016 HackerBay, Inc.
 

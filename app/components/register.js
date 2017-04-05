@@ -48,13 +48,18 @@ class Register extends React.Component {
             /****Tracking*********/                
              mixpanel.alias(this.state.email);
 
-             mixpanel.people.set({ "Name": this.state.name,"$email": this.state.email});
+             
+            if(this.state.isCustomDomain){
+              mixpanel.people.set({ "Name": this.state.name,"$email": this.state.email,"CompanyName": this.state.companyName,"CompanySize": this.state.companySize,"PhoneNumber": this.state.phoneNumber,"JobRole": this.state.jobRole});
              //mixpanel.identify(data._id);
 
-             mixpanel.register({ "Name": this.state.name,"Email": this.state.email});
-            if(this.state.isCustomDomain){
+              mixpanel.register({ "Name": this.state.name,"Email": this.state.email,"CompanyName": this.state.companyName,"CompanySize": this.state.companySize,"PhoneNumber": this.state.phoneNumber,"JobRole": this.state.jobRole});
               mixpanel.track('Signup', { "Name": this.state.name,"Email": this.state.email,"CompanyName": this.state.companyName,"CompanySize": this.state.companySize,"PhoneNumber": this.state.phoneNumber,"JobRole": this.state.jobRole});
             } else {
+              mixpanel.people.set({ "Name": this.state.name,"$email": this.state.email});
+             //mixpanel.identify(data._id);
+
+              mixpanel.register({ "Name": this.state.name,"Email": this.state.email});
               mixpanel.track('Signup', { "Name": this.state.name,"Email": this.state.email});
             }
              

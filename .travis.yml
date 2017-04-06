@@ -18,7 +18,24 @@ install:
 after_success:
 # Build Docker Images
 - docker build -t cloudboost/accounts:2.0.$TRAVIS_BUILD_NUMBER .
-- docker build -t cloudboost/accounts:latest .
+- if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker build -t cloudboost/accounts:latest .;
+  else
+    docker build -t cloudboost/accounts:staging .;
+  fi
+
+# Docker Deploy for staging builds
+- if [ "$TRAVIS_BRANCH" == "staging" ]; then
+    docker login --username $DOCKERUSERNAME --password $DOCKERPASSWORD --email $DOCKEREMAIL;
+    docker push cloudboost/accounts:staging;
+    git clone https://github.com/CloudBoost/kube-cred.git;
+    cd kube-cred;
+    openssl enc -in config.enc -out config -d -aes256 -k $KUBE_ENC;
+    mkdir ~/.kube;
+    mv config ~/.kube/;
+    kubectl rolling-update cloudboost-accounts-staging --image=cloudboost/accounts:staging --image-pull-policy=Always;
+    curl -X DELETE "https://api.cloudflare.com/client/v4/zones/""$cloudflare_zone""/purge_cache" -H "X-Auth-Email:hello@cloudboost.io" -H "X-Auth-Key:""$cloud_flare_key" -H "Content-Type:application/json" --data "{'purge_everything':true}";
+  fi
 before_deploy:
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
@@ -32,20 +49,20 @@ deploy:
   skip_cleanup: true
   on:
     tags: false
-    all_branches: true
+    branch: master
 after_deploy:
 # Docker Deploy.
 - if [ "$TRAVIS_BRANCH" == "master" ]; then
-  docker login --username $DOCKERUSERNAME --password $DOCKERPASSWORD --email $DOCKEREMAIL;
-  docker push cloudboost/accounts:2.0.$TRAVIS_BUILD_NUMBER;
-  docker push cloudboost/accounts:latest;
-  git clone https://github.com/CloudBoost/kube-cred.git;
-  cd kube-cred;
-  openssl enc -in config.enc -out config -d -aes256 -k $KUBE_ENC;
-  mkdir ~/.kube;
-  mv config ~/.kube/;
-  kubectl rolling-update cloudboost-accounts --image=cloudboost/accounts:latest --image-pull-policy=Always;
-  curl -X DELETE "https://api.cloudflare.com/client/v4/zones/""$cloudflare_zone""/purge_cache" -H "X-Auth-Email:hello@cloudboost.io" -H "X-Auth-Key:""$cloud_flare_key" -H "Content-Type:application/json" --data "{'purge_everything':true}";
+    docker login --username $DOCKERUSERNAME --password $DOCKERPASSWORD --email $DOCKEREMAIL;
+    docker push cloudboost/accounts:2.0.$TRAVIS_BUILD_NUMBER;
+    docker push cloudboost/accounts:latest;
+    git clone https://github.com/CloudBoost/kube-cred.git;
+    cd kube-cred;
+    openssl enc -in config.enc -out config -d -aes256 -k $KUBE_ENC;
+    mkdir ~/.kube;
+    mv config ~/.kube/;
+    kubectl rolling-update cloudboost-accounts --image=cloudboost/accounts:latest --image-pull-policy=Always;
+    curl -X DELETE "https://api.cloudflare.com/client/v4/zones/""$cloudflare_zone""/purge_cache" -H "X-Auth-Email:hello@cloudboost.io" -H "X-Auth-Key:""$cloud_flare_key" -H "Content-Type:application/json" --data "{'purge_everything':true}";
   fi
 branches:
   except:

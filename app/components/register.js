@@ -50,11 +50,11 @@ class Register extends React.Component {
 
              
             if(this.state.isCustomDomain){
-              mixpanel.people.set({ "Name": this.state.name,"$email": this.state.email,"CompanyName": this.state.companyName,"CompanySize": this.state.companySize,"PhoneNumber": this.state.phoneNumber,"JobRole": this.state.jobRole});
+              mixpanel.people.set({ "Name": this.state.name,"$email": this.state.email,"CompanyName": this.state.companyName,"CompanySize": this.state.companySize,"PhoneNumber": this.state.phoneNumber,"JobRole": this.state.jobRole,"reference":this.state.reference});
              //mixpanel.identify(data._id);
 
-              mixpanel.register({ "Name": this.state.name,"Email": this.state.email,"CompanyName": this.state.companyName,"CompanySize": this.state.companySize,"PhoneNumber": this.state.phoneNumber,"JobRole": this.state.jobRole});
-              mixpanel.track('Signup', { "Name": this.state.name,"Email": this.state.email,"CompanyName": this.state.companyName,"CompanySize": this.state.companySize,"PhoneNumber": this.state.phoneNumber,"JobRole": this.state.jobRole});
+              mixpanel.register({ "Name": this.state.name,"Email": this.state.email,"CompanyName": this.state.companyName,"CompanySize": this.state.companySize,"PhoneNumber": this.state.phoneNumber,"JobRole": this.state.jobRole,"reference":this.state.reference});
+              mixpanel.track('Signup', { "Name": this.state.name,"Email": this.state.email,"CompanyName": this.state.companyName,"CompanySize": this.state.companySize,"PhoneNumber": this.state.phoneNumber,"JobRole": this.state.jobRole,"reference":this.state.reference});
             } else {
               mixpanel.people.set({ "Name": this.state.name,"$email": this.state.email});
              //mixpanel.identify(data._id);

@@ -27,7 +27,7 @@ class NewServer extends React.Component {
     if (__isBrowser) document.title = "CloudBoost | New Server"
     axios.get(USER_SERVICE_URL + '/server/isNewServer').then((res) => {
       if (!res.data) {
-        // window.location.href = '/#/login'
+        window.location.href = '/#/login'
       }
     });
   }
@@ -35,12 +35,27 @@ class NewServer extends React.Component {
     if (e.preventDefault) {
       e.preventDefault()
     }
+
     this.setProgress(true)
     let postData = { email: this.state.email, password: this.state.password, name: this.state.name, isAdmin: true }
     axios.post(USER_SERVICE_URL + "/user/signup", postData).then(function (data) {
 
-      mixpanel.track('NEW SERVER', { "Name": this.state.name,"Email": this.state.email,"CompanyName": this.state.companyName,"CompanySize": this.state.companySize,"PhoneNumber": this.state.phoneNumber,"JobRole": this.state.jobRole,"reference":this.state.reference});
+      //moxpanel track
+      let payload = { "Name": this.state.name,"Email": this.state.email,"CompanyName": this.state.companyName,"CompanySize": this.state.companySize,"PhoneNumber": this.state.phoneNumber,"JobRole": this.state.jobRole,"reference":this.state.reference}
+      mixpanel.track('NEW SERVER', payload);
 
+      // post to slack webhook , make chages here for updating webhook
+      axios({
+          url:"https://hooks.slack.com/services/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",
+          method: 'post',
+          withCredentials: false,
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          data:{
+              text:JSON.stringify(payload).replace("{","").replace("}","").replace(",","\n").replace(",","\n").replace(",","\n").replace(",","\n").replace(",","\n").replace(",","\n").replace(",","\n")
+          }
+      })
+
+      // set cookies for login
       cookie.save('userId', data.data._id, { path: '/', domain: SERVER_DOMAIN });
       cookie.save('userFullname', data.data.name, { path: '/', domain: SERVER_DOMAIN });
       cookie.save('email', data.data.email, { path: '/', domain: SERVER_DOMAIN });

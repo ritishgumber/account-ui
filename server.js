@@ -21,6 +21,7 @@ global.__isDevelopment = process.env["CLOUDBOOST_DEVELOPMENT"] || false
 global.__isHosted = process.env["CLOUDBOOST_HOSTED"] || false
 global.__isStaging = process.env["IS_STAGING"] || false
 global.__isBrowser = false;
+
 if (__isStaging) {
 	global.USER_SERVICE_URL = "https://staging-service.cloudboost.io"
 	global.SERVER_DOMAIN = "cloudboost.io"
@@ -53,6 +54,7 @@ app.get('/app/key.js', function (req, res) {
 	content += "var __isDevelopment = " + (process.env["CLOUDBOOST_DEVELOPMENT"] || "false") + ";\n";
 	content += "var __isHosted = " + (process.env["CLOUDBOOST_HOSTED"] || "false") + ";\n";
 	content += "var USER_SERVICE_URL = null,\n";
+	content += "__isBrowser = true,\n";
 	content += "SERVER_URL = null,\n";
 	content += "DASHBOARD_URL = null,\n";
 	content += "ACCOUNTS_URL = null,\n";

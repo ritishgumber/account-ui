@@ -10,6 +10,7 @@ dependencies:
     - sudo apt-get update
     - sudo apt-get install curl libc6 libcurl3 zlib1g
     - npm install
+    - npm install -g webpack
   post:
     - webpack --progress
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl

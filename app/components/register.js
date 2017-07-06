@@ -90,7 +90,8 @@ class Register extends React.Component {
    validateEmail(e){
       e.preventDefault()
       let domain = this.state.email.replace(/.*@/, "")
-      let isCustomDomain = DOMAIN_LIST.indexOf(domain) === -1
+      // let isCustomDomain = DOMAIN_LIST.indexOf(domain) === -1
+      let isCustomDomain = true // add company details for all Email ids.
       if(isCustomDomain){
         this.setState({isCustomDomain:isCustomDomain})
       } else this.signUp(e)
